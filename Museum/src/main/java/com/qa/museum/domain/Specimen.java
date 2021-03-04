@@ -1,4 +1,4 @@
-package domain;
+package com.qa.museum.domain;
 
 import java.util.Date;
 
