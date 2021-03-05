@@ -8,4 +8,6 @@ import com.qa.museum.domain.Specimen;
 @Repository
 public interface SpecimenRepo extends JpaRepository<Specimen, Long> {
 
+	Specimen findByLatinName(String latinName);
+
 }

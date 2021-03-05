@@ -36,12 +36,12 @@ public class SpecimenServiceDB implements SpecimenService {
 	}
 
 	@Override
-	public Specimen getSpecimenByName(String name) {
+	public Specimen getByLatinName(String latinName) {
 		return this.repo.findByLatinName(latinName);
 	}
 
 	@Override
-	public Specimen removeSpecimen(Long id) {
+	public boolean removeSpecimen(Long id) {
 		this.repo.deleteById(id);
 		return !this.repo.existsById(id);
 	}
