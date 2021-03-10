@@ -1,6 +1,6 @@
 package com.qa.museum.domain;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -13,13 +13,15 @@ public class Specimen {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+
 	private String latinName;
 	private String origin;
 	private String storageLocation;
-	private Date dateArrived;
+	private LocalDate dateArrived;
 	private String description;
 
-	public Specimen(String latinName, String origin, String storageLocation, Date dateArrived, String description) {
+	public Specimen(String latinName, String origin, String storageLocation, LocalDate dateArrived,
+			String description) {
 		super();
 		this.latinName = latinName;
 		this.origin = origin;
@@ -28,7 +30,7 @@ public class Specimen {
 		this.description = description;
 	}
 
-	public Specimen(Long id, String latinName, String origin, String storageLocation, Date dateArrived,
+	public Specimen(Long id, String latinName, String origin, String storageLocation, LocalDate dateArrived,
 			String description) {
 		super();
 		this.id = id;
@@ -75,11 +77,11 @@ public class Specimen {
 		this.storageLocation = storageLocation;
 	}
 
-	public Date getDateArrived() {
+	public LocalDate getDateArrived() {
 		return dateArrived;
 	}
 
-	public void setDateArrived(Date dateArrived) {
+	public void setDateArrived(LocalDate dateArrived) {
 		this.dateArrived = dateArrived;
 	}
 

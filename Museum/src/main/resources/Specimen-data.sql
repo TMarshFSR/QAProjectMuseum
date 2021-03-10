@@ -1,0 +1,1 @@
+INSERT INTO `specimen` (`date_arrived`, `description`, `latin_name`, `origin`, `storage_location`) VALUES ('2015-10-07', 'skeleton', 'archaeornithymimus', 'Peru', 'Container-C');

@@ -30,12 +30,12 @@ public class SpecimenController {
 		return new ResponseEntity<Specimen>(this.service.createSpecimen(specimen), HttpStatus.CREATED);
 	}
 
-	@GetMapping("/getSpecimen")
+	@GetMapping("/getSpecimens")
 	public ResponseEntity<List<Specimen>> getSpecimen() {
 		return ResponseEntity.ok(this.service.getSpecimen());
 	}
 
-	@GetMapping("/getSpecimen/{id}")
+	@GetMapping("/getSpecimenById/{id}")
 	public Specimen getSpecimenById(@PathVariable Long id) {
 		return this.service.getSpecimenById(id);
 	}
@@ -45,7 +45,7 @@ public class SpecimenController {
 		return this.service.removeSpecimen(id);
 	}
 
-	@PutMapping("/updateDino/{id}")
+	@PutMapping("/updateSpecimen/{id}")
 	public Specimen updateSpecimen(@PathVariable Long id, @RequestBody Specimen newSpecimen) {
 		return this.service.updateSpecimen(id, newSpecimen);
 	}
