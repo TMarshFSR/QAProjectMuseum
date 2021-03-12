@@ -44,33 +44,19 @@ public class SeleniumTests {
 		WebElement descriptionInput = this.driver.findElementByXPath("/html/body/div[1]/div/div[2]/div/form/input[5]");
 		descriptionInput.sendKeys("Complete Mount");
 
-		WebElement submitButton = this.driver.findElementByXPath("/html/body/div[1]/div/div[2]/div/form/button[2]");
-		submitButton.click();
+		descriptionInput.submit();
 
+		// Left in for wait
 		WebElement idResult = implicitWait.until(ExpectedConditions
 				.presenceOfElementLocated(By.xpath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr/td[1]")));
 
-		WebElement speciesResult = this.driver
-				.findElementByXPath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr/td[2]");
+		WebElement table = this.driver.findElementByXPath("/html/body/div[1]/div/div[1]/div/div/table/tbody");
 
-		WebElement originResult = this.driver
-				.findElementByXPath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr/td[3]");
-
-		WebElement storageLocationResult = this.driver
-				.findElementByXPath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr/td[4]");
-
-		WebElement dateReceivedResult = this.driver
-				.findElementByXPath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr/td[5]");
-
-		WebElement descriptionResult = this.driver
-				.findElementByXPath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr/td[6]");
-
-		Assertions.assertTrue(idResult.getText().contains("1"));
-		Assertions.assertTrue(speciesResult.getText().contains("Howler Monkey"));
-		Assertions.assertTrue(originResult.getText().contains("Borneo"));
-		Assertions.assertTrue(storageLocationResult.getText().contains("Primate Display"));
-		Assertions.assertTrue(dateReceivedResult.getText().contains("1997-09-22"));
-		Assertions.assertTrue(descriptionResult.getText().contains("Complete Mount"));
+		Assertions.assertTrue(table.getText().contains("Howler Monkey"));
+		Assertions.assertTrue(table.getText().contains("Borneo"));
+		Assertions.assertTrue(table.getText().contains("Primate Display"));
+		Assertions.assertTrue(table.getText().contains("1997-09-22"));
+		Assertions.assertTrue(table.getText().contains("Complete Mount"));
 	}
 
 	@Test
@@ -106,10 +92,13 @@ public class SeleniumTests {
 		WebElement table = this.driver.findElementByXPath("/html/body/div[1]/div/div[1]/div/div/table/tbody");
 
 		Assertions.assertTrue(table.getText().contains("Chimpanzee"));
+		Assertions.assertTrue(table.getText().contains("Borneo"));
+		Assertions.assertTrue(table.getText().contains("Primate Display"));
+		Assertions.assertTrue(table.getText().contains("1997-09-22"));
+		Assertions.assertTrue(table.getText().contains("Complete Mount"));
 
 	}
 
-//
 //	@Test
 //	void testDelete() {
 //
@@ -128,7 +117,7 @@ public class SeleniumTests {
 //
 //		Assertions.assertFalse(pageSource.contains("Chimpanzee"));
 //		Assertions.assertFalse(pageSource.contains("Complete Mount"));
-//		Assertions.assertFalse(pageSource.contains("1993-09-22"));
+//		Assertions.assertFalse(pageSource.contains("1997-09-22"));
 //
 //	}
 
