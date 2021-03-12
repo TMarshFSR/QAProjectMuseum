@@ -22,7 +22,7 @@ public class SeleniumTests {
 	}
 
 	@Test
-	void testRead() {
+	void testCreate() {
 		this.driver.get("http://127.0.0.1:5500/index.html");
 
 		WebDriverWait explicitWait = new WebDriverWait(driver, 10);
@@ -70,6 +70,29 @@ public class SeleniumTests {
 		Assertions.assertTrue(storageLocationResult.getText().contains("Primate Display"));
 		Assertions.assertTrue(dateReceivedResult.getText().contains("1993-09-22"));
 		Assertions.assertTrue(descriptionResult.getText().contains("Complete Mount"));
+
+	}
+
+	@Test
+	void testDelete() {
+
+		this.driver.get("http://127.0.0.1:5500/index.html");
+		WebDriverWait explicitWait = new WebDriverWait(driver, 10);
+
+		WebElement deleteButton1 = this.driver
+				.findElementByXPath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr/button[1]");
+
+		deleteButton1.click();
+
+		WebElement resetButton = explicitWait.until(
+				ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div[2]/div/form/button[1]")));
+		resetButton.click();
+
+		String pageSource = this.driver.getPageSource();
+
+		Assertions.assertFalse(pageSource.contains("Chimpanzee"));
+		Assertions.assertFalse(pageSource.contains("Complete Mount"));
+		Assertions.assertFalse(pageSource.contains("1993-09-22"));
 
 	}
 
