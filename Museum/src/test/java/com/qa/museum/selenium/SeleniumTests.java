@@ -1,5 +1,7 @@
 package com.qa.museum.selenium;
 
+import static org.assertj.core.api.Assertions.assertThat;
+
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -23,25 +25,33 @@ public class SeleniumTests {
 	}
 
 	@Test
+	void testRead() {
+
+		this.driver.get("http://127.0.0.1:5500/index.html");
+
+		WebElement homeButton = this.driver.findElementByXPath("/html/body/nav/div/div/ul/li[1]");
+
+		assertThat(homeButton.getText()).isEqualTo("Home");
+
+	}
+
+	@Test
 	void testCreate() {
 		this.driver.get("http://127.0.0.1:5500/index.html");
 
 		WebDriverWait implicitWait = new WebDriverWait(driver, 10);
 
 		WebElement speciesInput = this.driver.findElementByXPath("/html/body/div[1]/div/div[2]/div/form/input[1]");
-		speciesInput.sendKeys("Howler Monkey");
-
 		WebElement originInput = this.driver.findElementByXPath("/html/body/div[1]/div/div[2]/div/form/input[2]");
-		originInput.sendKeys("Borneo");
-
 		WebElement storageLocationInput = this.driver
 				.findElementByXPath("/html/body/div[1]/div/div[2]/div/form/input[3]");
-		storageLocationInput.sendKeys("Primate Display");
-
 		WebElement dateReceivedInput = this.driver.findElementByXPath("/html/body/div[1]/div/div[2]/div/form/input[4]");
-		dateReceivedInput.sendKeys("22/09/1997");
-
 		WebElement descriptionInput = this.driver.findElementByXPath("/html/body/div[1]/div/div[2]/div/form/input[5]");
+
+		speciesInput.sendKeys("Howler Monkey");
+		originInput.sendKeys("Borneo");
+		storageLocationInput.sendKeys("Primate Display");
+		dateReceivedInput.sendKeys("22/09/1997");
 		descriptionInput.sendKeys("Complete Mount");
 
 		descriptionInput.submit();
@@ -69,6 +79,7 @@ public class SeleniumTests {
 				.findElementByXPath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr/button[2]");
 		updateButton.click();
 
+		// left in for wait
 		WebElement closeButton = implicitWait.until(
 				ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[2]/div/div/div[2]/form/button[1]")));
 
@@ -99,27 +110,39 @@ public class SeleniumTests {
 
 	}
 
-//	@Test
-//	void testDelete() {
-//
-//		WebDriverWait implicitWait = new WebDriverWait(driver, 10);
-//
-//		WebElement deleteButton1 = this.driver
-//				.findElementByXPath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr/button[1]");
-//
-//		deleteButton1.click();
-//
-//		WebElement resetButton = implicitWait.until(
-//				ExpectedConditions.elementToBeClickable(By.xpath("/html/body/div[1]/div/div[2]/div/form/button[1]")));
-//		resetButton.click();
-//
-//		String pageSource = this.driver.getPageSource();
-//
-//		Assertions.assertFalse(pageSource.contains("Chimpanzee"));
-//		Assertions.assertFalse(pageSource.contains("Complete Mount"));
-//		Assertions.assertFalse(pageSource.contains("1997-09-22"));
-//
-//	}
+	@Test
+	void testDelete() {
+
+		this.driver.get("http://127.0.0.1:5500/index.html");
+		WebDriverWait implicitWait = new WebDriverWait(driver, 10);
+
+		WebElement speciesInput = this.driver.findElementByXPath("/html/body/div[1]/div/div[2]/div/form/input[1]");
+		WebElement originInput = this.driver.findElementByXPath("/html/body/div[1]/div/div[2]/div/form/input[2]");
+		WebElement storageLocationInput = this.driver
+				.findElementByXPath("/html/body/div[1]/div/div[2]/div/form/input[3]");
+		WebElement dateReceivedInput = this.driver.findElementByXPath("/html/body/div[1]/div/div[2]/div/form/input[4]");
+		WebElement descriptionInput = this.driver.findElementByXPath("/html/body/div[1]/div/div[2]/div/form/input[5]");
+
+		speciesInput.sendKeys("Giraffa");
+		originInput.sendKeys("Gambia");
+		storageLocationInput.sendKeys("Main Hall");
+		dateReceivedInput.sendKeys("19/01/2001");
+		descriptionInput.sendKeys("Complete Mount");
+		descriptionInput.submit();
+
+		WebElement deleteButton1 = implicitWait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr[2]/button[1]")));
+
+		deleteButton1.click();
+
+		Boolean giraffaGone = implicitWait.until(ExpectedConditions
+				.invisibilityOfElementLocated(By.xpath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr[2]")));
+//		giraffaGone.click();
+
+		String pageSource = this.driver.getPageSource();
+
+		Assertions.assertFalse(pageSource.contains("Giraffa"));
+	}
 
 	@AfterEach
 	void tearDown() {
