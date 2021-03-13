@@ -54,9 +54,8 @@ public class SeleniumTests {
 		dateReceivedInput.sendKeys("22/09/1997");
 		descriptionInput.sendKeys("Complete Mount");
 
-		descriptionInput.submit();
+		descriptionInput.sendKeys(Keys.RETURN);
 
-		// Left in for wait
 		WebElement idResult = implicitWait.until(ExpectedConditions
 				.presenceOfElementLocated(By.xpath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr/td[1]")));
 
@@ -67,16 +66,35 @@ public class SeleniumTests {
 		Assertions.assertTrue(table.getText().contains("Primate Display"));
 		Assertions.assertTrue(table.getText().contains("1997-09-22"));
 		Assertions.assertTrue(table.getText().contains("Complete Mount"));
+
+		driver.findElement(By.xpath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr/button[1]"))
+				.sendKeys(Keys.RETURN);
 	}
 
 	@Test
-	void testUpdate() {
+	void testUpdate() throws InterruptedException {
+
 		this.driver.get("http://127.0.0.1:5500/index.html");
 
 		WebDriverWait implicitWait = new WebDriverWait(driver, 10);
 
-		WebElement updateButton = this.driver
-				.findElementByXPath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr/button[2]");
+		// CREATE
+		WebElement speciesInput = this.driver.findElementByXPath("/html/body/div[1]/div/div[2]/div/form/input[1]");
+		WebElement originInput = this.driver.findElementByXPath("/html/body/div[1]/div/div[2]/div/form/input[2]");
+		WebElement storageLocationInput = this.driver
+				.findElementByXPath("/html/body/div[1]/div/div[2]/div/form/input[3]");
+		WebElement dateReceivedInput = this.driver.findElementByXPath("/html/body/div[1]/div/div[2]/div/form/input[4]");
+		WebElement descriptionInput = this.driver.findElementByXPath("/html/body/div[1]/div/div[2]/div/form/input[5]");
+		speciesInput.sendKeys("Howler Monkey");
+		originInput.sendKeys("Borneo");
+		storageLocationInput.sendKeys("Primate Display");
+		dateReceivedInput.sendKeys("22/09/1997");
+		descriptionInput.sendKeys("Complete Mount");
+		descriptionInput.sendKeys(Keys.RETURN);
+
+		// UPDATE
+		WebElement updateButton = implicitWait.until(ExpectedConditions
+				.elementToBeClickable(By.xpath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr/button[2]")));
 		updateButton.click();
 
 		// left in for wait
@@ -98,7 +116,7 @@ public class SeleniumTests {
 		updateStorageLocationInput.sendKeys("Primate Display");
 		updateDateReceivedInput.sendKeys("22/09/1997");
 		updateDescriptionInput.sendKeys("Complete Mount");
-		updateDescriptionInput.sendKeys(Keys.ENTER);
+		updateDescriptionInput.sendKeys(Keys.RETURN);
 
 		WebElement table = this.driver.findElementByXPath("/html/body/div[1]/div/div[1]/div/div/table/tbody");
 
@@ -108,10 +126,14 @@ public class SeleniumTests {
 		Assertions.assertTrue(table.getText().contains("1997-09-22"));
 		Assertions.assertTrue(table.getText().contains("Complete Mount"));
 
+		Thread.sleep(2000);
+		driver.findElement(By.xpath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr[1]/button[1]"))
+				.sendKeys(Keys.RETURN);
+
 	}
 
 	@Test
-	void testDelete() {
+	void testDelete() throws InterruptedException {
 
 		this.driver.get("http://127.0.0.1:5500/index.html");
 		WebDriverWait implicitWait = new WebDriverWait(driver, 10);
@@ -131,13 +153,13 @@ public class SeleniumTests {
 		descriptionInput.submit();
 
 		WebElement deleteButton1 = implicitWait.until(ExpectedConditions
-				.elementToBeClickable(By.xpath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr[2]/button[1]")));
+				.elementToBeClickable(By.xpath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr/button[1]")));
 
 		deleteButton1.click();
+		Thread.sleep(1000);
 
 		Boolean giraffaGone = implicitWait.until(ExpectedConditions
 				.invisibilityOfElementLocated(By.xpath("/html/body/div[1]/div/div[1]/div/div/table/tbody/tr[2]")));
-//		giraffaGone.click();
 
 		String pageSource = this.driver.getPageSource();
 
