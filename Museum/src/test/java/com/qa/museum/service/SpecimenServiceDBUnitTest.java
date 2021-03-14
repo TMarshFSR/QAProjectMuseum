@@ -75,9 +75,6 @@ public class SpecimenServiceDBUnitTest {
 	@Test
 	void testDelete() {
 
-		Specimen newSpecimen = new Specimen(1L, "Tyrannosaurus_Rex", "California, USA", "Container_A",
-				LocalDate.of(2020, 05, 02), "Jaw Bone");
-
 		Mockito.when(!this.repo.existsById(1L)).thenReturn(false);
 
 		assertThat(this.service.removeSpecimen(1L)).isEqualTo(true);
